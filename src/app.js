@@ -3,8 +3,6 @@ import express from "express"
 import { loggerMiddleware } from "./middlewares/logger.middleware.js"
 import authRoutes from "./routes/auth.routes.js"
 import serviciosRoutes from "./routes/servicios.routes.js"
-import prestamosRoutes from "./routes/prestamos.routes.js"
-import {verificarToken} from "./middlewares/auth.middleware.js"
 
 const app = express()
 
