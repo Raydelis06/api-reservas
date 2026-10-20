@@ -26,14 +26,14 @@ export const crearServicio = async (req,res,next) => {
             return res.status(400).json('Ya existe este servicio')
         }
 
-        const libro = await prisma.servicio.create({
+        const servicio = await prisma.servicio.create({
             data: {
                 nombre: nombre, descripcion: descripcion, duracion: duracion, precio:precio
             }
         })
 
         return res.status(201).json({mensaje: 'Servicio creado con exito!', servicio: {
-            id: libro.id,
+            id: servicio.id,
             nombre: servicio.nombre,
             descripcion: servicio.descripcion,
             duracion: servicio.duracion + " minutos",
@@ -52,7 +52,7 @@ export const editarServicio = async (req, res) => {
         if (isNaN(id)) {
             return res.status(400).json({ error: "El id debe ser un número válido" });
         }
-        const servicioExistente = await prisma.libro.findUnique({where: {id}})
+        const servicioExistente = await prisma.servicio.findUnique({where: {id}})
 
         if(!servicioExistente){
             return res.status(400).json('El servicio seleccionado no existe')
