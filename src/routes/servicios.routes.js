@@ -13,7 +13,7 @@ import {
 import {
     validarCamposServicio
 } from "../middlewares/validaciones.middleware.js"
-import {soloAdmin} from "../middlewares/auth.middleware.js"
+import {soloAdmin, verificarToken} from "../middlewares/auth.middleware.js"
 
 const router = Router()
 
@@ -22,10 +22,10 @@ const router = Router()
 //acceso: cualquier usuario autenticado
 router.get('/', obtenerServicios)
 //acceso: admin
-router.post('/', soloAdmin, validarCamposServicio, crearServicio)
+router.post('/', verificarToken, soloAdmin, validarCamposServicio, crearServicio)
 //acceso: admin
-router.put('/:id', soloAdmin, editarServicio)
+router.put('/:id', verificarToken, soloAdmin, editarServicio)
 //acceso: admin
-router.delete('/:id', soloAdmin, eliminarServicio)
+router.delete('/:id', verificarToken, soloAdmin, eliminarServicio)
 
 export default router
