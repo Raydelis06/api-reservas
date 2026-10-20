@@ -16,7 +16,7 @@ export const obtenerServicios = async (req, res) => {
 
 export const crearServicio = async (req,res,next) => {
     console.log("auth header:", req.headers.authorization);
-    console.log("req.user:", req.user);
+    console.log("req.usuario:", req.user);
     try{
         const {nombre, descripcion, duracion, precio} = req.body
 
@@ -26,7 +26,7 @@ export const crearServicio = async (req,res,next) => {
             return res.status(400).json('Ya existe este servicio')
         }
 
-        const libro = await prisma.libro.create({
+        const libro = await prisma.servicio.create({
             data: {
                 nombre: nombre, descripcion: descripcion, duracion: duracion, precio:precio
             }
@@ -67,7 +67,7 @@ export const editarServicio = async (req, res) => {
             }
         })
 
-        res.status(200).json({mensaje: "Servicio actualizado exitosamente"});
+        res.status(200).json({mensaje: "Servicio actualizado exitosamente", servicioActualizado});
     } catch (error) {
         console.error("Error al actualizar el servicio ", error);
         res.status(500).json({ error: "Error interno del servidor" });
@@ -80,7 +80,7 @@ export const eliminarServicio = async (req, res) => {
         if (isNaN(id)) {
             return res.status(400).json({ error: "El id debe ser un número válido" });
         }
-        const servicioExistente = await prisma.libro.findUnique({where: {id}})
+        const servicioExistente = await prisma.servicio.findUnique({where: {id}})
 
         if(!servicioExistente){
             return res.status(400).json('El servicio seleccionado no existe')
