@@ -1,5 +1,6 @@
 import { prisma } from "../db.js"
 
+
 export const obtenerServicios = async (req, res) => {
     try {
         const servicios = await prisma.servicio.findMany({
@@ -14,6 +15,8 @@ export const obtenerServicios = async (req, res) => {
 };
 
 export const crearServicio = async (req,res,next) => {
+    console.log("auth header:", req.headers.authorization);
+    console.log("req.user:", req.user);
     try{
         const {nombre, descripcion, duracion, precio} = req.body
 
