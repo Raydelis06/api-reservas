@@ -19,3 +19,11 @@ model Usuario {
   password  String   
   rol       String    @default("cliente")  
 }
+
+model Servicio{
+  id            Int       @id @default(autoincrement()) 
+  nombre        String    @unique
+  descripcion   String
+  duracion      Int       @default(0)
+  precio        Decimal   @default(0) @db.Decimal(10, 2)
+}
