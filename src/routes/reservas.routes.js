@@ -1,8 +1,3 @@
-// GET	/servicios	Autenticado	Listar servicios
-// POST	/servicios	Solo admin	Crear servicio
-// PUT	/servicios/:id	Solo admin	Editar servicio
-// DELETE	/servicios/:id	Solo admin	Eliminar servicio
-
 import { Router } from "express";
 import {
     obtenerTodasLasReservas,
