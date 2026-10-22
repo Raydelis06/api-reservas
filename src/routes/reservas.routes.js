@@ -5,7 +5,7 @@ import {
     crearReserva,
     cambiarEstadoReserva,
     cancelarMiReserva,
-} from "../controllers/servicios.controller.js"
+} from "../controllers/reservas.controller.js"
 import {
     validarCamposReserva
 } from "../middlewares/validaciones.middleware.js"
