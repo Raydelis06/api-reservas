@@ -60,11 +60,11 @@ export const crearReserva = async (req, res) => {
 }
 export const cambiarEstadoReserva = async (req, res) => {
     try {
-        const id = req.params.id;
+        const id = parseInt(req.params.id);
         const { estado } = req.body;
         const estadosValidos = ["pendiente", "completada", "cancelada"];
 
-        if (!isNaN(id) || id <= 0) {
+        if (isNaN(id) || id <= 0) {
             return res.status(400).json({ error: "El id debe ser un número válido" });
         }
         if (!estadosValidos.includes(estado)) {
@@ -92,20 +92,25 @@ export const cambiarEstadoReserva = async (req, res) => {
 }
 export const cancelarMiReserva = async (req, res) => {
     try {
-        const id = req.params.id;
-        if (!isNaN(id) || id <= 0) {
+        const id = parseInt(req.params.id);
+        if (isNaN(id) || id <= 0) {
             return res.status(400).json({ error: "El id debe ser un número válido" });
         }
 
-        const reservaActualizada = await prisma.reserva.update({
+        const reservaActualizada = await prisma.reserva.updateMany({
             where: {
-                id,
+                id: id,
                 usuarioId: req.usuario.id
             },
             data: { estado: "cancelada" }
         });
 
-        return res.status(200).json({ mensaje: "Reserva cancelada exitosamente" });
+        if (reservaActualizada.count === 0) {
+            return res.status(404).json({ 
+                error: "No se pudo cancelar: la reserva no existe o no te pertenece" 
+            });
+        }  
+        return res.status(200).json({ mensaje: "Reserva cancelada exitosamente"});
     } catch (error) {
         console.error("Error al cancelar la reserva: ", error);
         res.status(500).json({ error: "Error interno del servidor al cancelar la reserva" });
