@@ -36,7 +36,7 @@ export const crearReserva = async (req, res) => {
         }
 
         const servicio = await prisma.servicio.findUnique({
-            where: { id: idServicio }
+            where: { id: servicioId }
         });
         if (!servicio) {
             return res.status(404).json({ error: "El servicio no existe" });
@@ -55,7 +55,7 @@ export const crearReserva = async (req, res) => {
         return res.status(201).json(reserva);
     } catch (error) {
         console.error("Error al crear una reserva: ", error);
-        res.status(500).json({ error: "Error interno del servidor" });
+        res.status(500).json({ error: "Error interno del servidor al intentar crear la reserva" });
     }
 }
 export const cambiarEstadoReserva = async (req, res) => {
