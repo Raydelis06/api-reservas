@@ -3,7 +3,11 @@ import { prisma } from "../db.js"
 export const obtenerTodasLasReservas = async (req, res) => {
     try {
         const reservas = await prisma.reserva.findMany({
-            orderBy: { id: "asc" }
+            orderBy: { id: "asc" },
+            include: {
+                servicio: true,
+                usuario: true
+            },
         });
 
         res.status(200).json(reservas);
@@ -16,7 +20,10 @@ export const obtenerMisReservas = async (req, res) => {
     try {
         const reservas = await prisma.reserva.findMany({
             where: { usuarioId: req.usuario.id },
-            orderBy: { id: "asc" }
+            orderBy: { id: "asc" },
+            include: {
+                servicio: true
+            },
         });
         res.status(200).json(reservas);
     } catch (error) {
