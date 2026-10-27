@@ -4,9 +4,9 @@ export const obtenerTodasLasReservas = async (req, res) => {
     try {
         const reservas = await prisma.reserva.findMany({
             orderBy: [
+                { estado: "asc" },
                 { fecha: "desc" },
                 { hora: "desc" },
-                { estado: "asc" },
             ],
             include: {
                 servicio: true,
@@ -25,9 +25,9 @@ export const obtenerMisReservas = async (req, res) => {
         const reservas = await prisma.reserva.findMany({
             where: { usuarioId: req.usuario.id },
             orderBy: [
+                { estado: "asc" },
                 { fecha: "desc" },
                 { hora: "desc" },
-                { estado: "asc" },
             ],
             include: {
                 servicio: true
